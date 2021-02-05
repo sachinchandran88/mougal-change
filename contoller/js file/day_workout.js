@@ -43,8 +43,8 @@ $(document).on('click', '.btn-save', function(){
 				$('#nestable').nestable({
                    group: 1
                     })
-    .on('change', updateOutput);
-    alert("hello");
+                .on('change', updateOutput);
+   
 			}
 		});
 	}
@@ -97,8 +97,6 @@ $(document).ready(function(){
     })
     .on('change', function(){ last_touched = 'nestable'; })
     .on('change', updateOutput);
-
-
 
 });
 
