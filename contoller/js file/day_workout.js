@@ -1,38 +1,7 @@
 
 
-$(document).ready(function(){
-     var last_touched = '';
-     var value = ''
-     var updateOutput = function(e)
-     {
-     	var list = e.length ? e : $(e.target),
-         output = list.data('output');
-        if (window.JSON) {
-           value = (window.JSON.stringify(list.nestable('serialize')));
-            $.ajax({
-            type : 'POST',
-            url  : site_url + "admin/programs/addsortvalue",
-            dataType : "JSON",
-            data : { 'whichnest' : last_touched,'value' : value},
-            success : function(data){
-                console.log(value);
-            }
-         });
-            
-        }
-        else {
-        output.val('JSON browser support required for this demo.');
-      }
+
  
-        
-    }; 
-  
-     $('#nestable').nestable({
-        group: 1
-    })
-    .on('change', function(){ last_touched = 'nestable'; })
-    .on('change', updateOutput)
-    	
 
 
 $(document).on('click', '.delete-program', function(){
@@ -71,7 +40,11 @@ $(document).on('click', '.btn-save', function(){
 			success: function(data){
 				$('#tbl-result').html(data.html);
 				$('#workout_id, #steps, #reps').val('');
-				$('#nestable').nestable();
+				$('#nestable').nestable({
+                   group: 1
+                    })
+    .on('change', updateOutput);
+    alert("hello");
 			}
 		});
 	}
@@ -94,5 +67,68 @@ $(document).on('click', '.btn-delete-exercise', function(){
 
 
 
+
+
+$(document).ready(function(){
+     var updateOutput = function(e){
+     	var last_touched = "";
+     	var list = e.length ? e : $(e.target),
+         output = list.data('output');
+        if (window.JSON) {
+           value = (window.JSON.stringify(list.nestable('serialize')));
+            $.ajax({
+            type : 'POST',
+            url  : site_url + "admin/programs/addsortvalue",
+            dataType : "JSON",
+            data : { 'whichnest' : last_touched,'value' : value},
+            success : function(data){
+                console.log(value);
+            }
+         });
+            
+        }
+        else {
+        output.val('JSON browser support required for this demo.');
+      }
+ 
+  }
+     $('#nestable').nestable({
+        group: 1
+    })
+    .on('change', function(){ last_touched = 'nestable'; })
+    .on('change', updateOutput);
+
+
+
 });
+
+function updateOutput(e)
+{
+	var last_touched = ''
+	var list = e.length ? e : $(e.target),
+         output = list.data('output');
+        if (window.JSON) {
+           value = (window.JSON.stringify(list.nestable('serialize')));
+            $.ajax({
+            type : 'POST',
+            url  : site_url + "admin/programs/addsortvalue",
+            dataType : "JSON",
+            data : { 'whichnest' : last_touched,'value' : value},
+            success : function(data){
+                console.log(value);
+            }
+         });
+            
+        }
+        else {
+        output.val('JSON browser support required for this demo.');
+      }
+   $('#nestable').nestable({
+        group: 1
+    })
+    .on('change', function(){ last_touched = 'nestable'; })
+    .on('change', updateOutput);
+}
+
+
 
